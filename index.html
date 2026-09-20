@@ -48,7 +48,7 @@
   </script>
 
   <style>
-    /* Chống tràn ngang trên mọi thiết bị di động */
+    /* Chống tràn viền ngang trên mọi màn hình di động */
     html, body {
       overflow-x: hidden;
       width: 100%;
@@ -57,7 +57,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Hiệu ứng nhịp đập tim kép chân thực (Double Heartbeat) */
+    /* Hiệu ứng nhịp đập tim kép (Double Heartbeat) */
     @keyframes cardiacPulse {
       0% { transform: scale(1); }
       14% { transform: scale(1.18); }
@@ -119,27 +119,18 @@
       transform: translateY(-50px);
       opacity: 1;
     }
-
-    /* Hiệu ứng trôi bồng bềnh */
-    @keyframes gentleFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
-    }
-    .animate-float {
-      animation: gentleFloat 4s ease-in-out infinite;
-    }
   </style>
 </head>
 
 <body class="bg-gradient-to-b from-rose-50 via-pink-50 to-red-50 text-slate-800 min-h-screen font-sans selection:bg-rose-200">
 
-  <!-- Canvas hiệu ứng hạt tim rơi & bung nở khi chạm -->
+  <!-- Canvas hạt tim bay & bung tim khi chạm màn hình -->
   <canvas id="heartCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-  <!-- Container chính -->
+  <!-- Khung nội dung chính -->
   <main class="relative z-10 max-w-xl mx-auto px-4 py-6 sm:py-10 flex flex-col items-center">
 
-    <!-- 1. HEADER NHỎ XINH -->
+    <!-- 1. HEADER -->
     <header class="w-full flex items-center justify-between mb-4">
       <div class="flex items-center space-x-2">
         <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-rose-100 text-rose-600 shadow-sm">
@@ -148,7 +139,7 @@
         <span class="text-xs font-semibold tracking-wider text-rose-500 uppercase">Kỷ Niệm Tình Yêu</span>
       </div>
 
-      <!-- Nút phát nhạc du dương -->
+      <!-- Nút phát nhạc nền -->
       <button id="musicToggleBtn" onclick="toggleMusic()" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-rose-200 shadow-sm text-xs text-rose-600 active:scale-95 transition-all">
         <span id="musicIcon" class="text-sm">🎵</span>
         <span id="musicStatusText">Nhạc: Tắt</span>
@@ -157,7 +148,7 @@
 
     <!-- 2. KHU VỰC CẶP ĐÔI & TRÁI TIM 3D -->
     <section class="w-full glass-card rounded-3xl p-5 sm:p-7 shadow-xl shadow-rose-200/50 mb-6">
-      <!-- Tiêu đề nghệ thuật Chí Tân & Chi Thu -->
+      <!-- Tiêu đề Chí Tân & Chi Thu -->
       <div class="text-center mb-6">
         <h1 class="font-script text-4xl sm:text-5xl text-rose-600 font-bold tracking-wide drop-shadow-sm">
           Chí Tân <span class="text-amber-500 font-serif text-3xl sm:text-4xl">&</span> Chi Thu
@@ -165,33 +156,26 @@
         <p class="text-xs text-rose-400 font-medium tracking-widest uppercase mt-1">Our Beautiful Love Story</p>
       </div>
 
-      <!-- Hàng Avatar 2 bên và Trái Tim 3D ở giữa -->
+      <!-- Avatar 2 bên & Trái tim ở giữa -->
       <div class="flex items-center justify-between gap-2 max-w-md mx-auto">
         
-        <!-- Avatar Chí Tân -->
+        <!-- Avatar Chí Tân (Cố định ảnh thật, viền hào quang quay) -->
         <div class="flex flex-col items-center flex-1">
-          <div class="relative group cursor-pointer" onclick="openAvatarModal('tan')" title="Chạm để đổi ảnh Chí Tân">
-            <!-- Hào quang quay -->
+          <div class="relative select-none">
             <div class="absolute -inset-1 rounded-full aura-glow opacity-80 blur-[2px]"></div>
             <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-white shadow-md bg-rose-100">
-              <img id="avatarTan" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80" alt="Chí Tân" class="w-full h-full object-cover" />
+              <img id="avatarTan" referrerpolicy="no-referrer" src="https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-1/461212682_1926979774380056_37020811083100250_n.jpg" alt="Chí Tân" class="w-full h-full object-cover" />
             </div>
-            <!-- Biểu tượng máy ảnh -->
-            <button class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center text-[10px] shadow border-2 border-white">
-              📷
-            </button>
           </div>
           <span class="mt-2.5 font-bold text-sm sm:text-base text-slate-800">Chí Tân</span>
           <span class="text-[10px] sm:text-xs text-rose-500 font-medium">Chàng trai của em</span>
         </div>
 
-        <!-- Trái tim 3D ở giữa (Nhịp đập + Bấm bung tim và lời thì thầm) -->
+        <!-- Trái tim 3D ở giữa (Nhịp đập tim kép) -->
         <div class="flex flex-col items-center justify-center relative px-2">
-          <!-- Vòng sóng tỏa -->
           <div class="absolute w-14 h-14 rounded-full bg-rose-400/20 ripple-ring-1 pointer-events-none"></div>
           <div class="absolute w-14 h-14 rounded-full bg-pink-400/20 ripple-ring-2 pointer-events-none"></div>
 
-          <!-- Nút trái tim 3D -->
           <button id="heartCenterBtn" onclick="onHeartClick(event)" class="relative z-10 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-rose-600 via-red-500 to-pink-500 flex items-center justify-center shadow-lg shadow-rose-500/50 animate-heartbeat active:scale-90 transition-transform">
             <svg class="w-8 h-8 sm:w-9 sm:h-9 text-white drop-shadow fill-current" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -200,18 +184,13 @@
           <span class="text-[10px] text-rose-400 font-semibold tracking-wider mt-2">Chạm tim</span>
         </div>
 
-        <!-- Avatar Chi Thu -->
+        <!-- Avatar Chi Thu (Cố định ảnh thật, viền hào quang quay) -->
         <div class="flex flex-col items-center flex-1">
-          <div class="relative group cursor-pointer" onclick="openAvatarModal('thu')" title="Chạm để đổi ảnh Chi Thu">
-            <!-- Hào quang quay -->
+          <div class="relative select-none">
             <div class="absolute -inset-1 rounded-full aura-glow opacity-80 blur-[2px]"></div>
             <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-white shadow-md bg-rose-100">
-              <img id="avatarThu" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Chi Thu" class="w-full h-full object-cover" />
+              <img id="avatarThu" referrerpolicy="no-referrer" src="https://scontent.fsgn5-22.fna.fbcdn.net/v/t39.30808-1/615369557_1396059388557899_5526468148412702061_n.jpg" alt="Chi Thu" class="w-full h-full object-cover" />
             </div>
-            <!-- Biểu tượng máy ảnh -->
-            <button class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center text-[10px] shadow border-2 border-white">
-              📷
-            </button>
           </div>
           <span class="mt-2.5 font-bold text-sm sm:text-base text-slate-800">Chi Thu</span>
           <span class="text-[10px] sm:text-xs text-rose-500 font-medium">Cô gái của anh</span>
@@ -219,13 +198,13 @@
 
       </div>
 
-      <!-- Bong bóng lời thì thầm ngọt ngào khi bấm tim -->
+      <!-- Bong bóng lời thì thầm ngọt ngào khi chạm tim -->
       <div id="whisperBubble" class="hidden mt-4 mx-auto max-w-sm text-center p-2.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium animate-bounce shadow-sm">
         💌 "Mỗi ngày bên Chi Thu đều là ngày ngọt ngào nhất của Chí Tân!"
       </div>
     </section>
 
-    <!-- 3. BỘ ĐẾM THỜI GIAN BÊN NHAU (TỪ 18/04/2026) -->
+    <!-- 3. BỘ ĐẾM THỜI GIAN THỜI GIAN THỰC (TỪ 18/04/2026) -->
     <section class="w-full glass-card rounded-3xl p-6 shadow-xl shadow-rose-200/50 mb-6 text-center">
       <p class="text-xs tracking-widest font-semibold uppercase text-rose-500 mb-1">Chúng Mình Đã Yêu Nhau</p>
       
@@ -237,26 +216,23 @@
         <span class="text-xl sm:text-2xl font-bold text-rose-500 ml-1">NGÀY</span>
       </div>
 
-      <!-- Huy hiệu ngày bắt đầu cố định 18/04/2026 (Không chỉnh sửa, trang nhã) -->
+      <!-- Nhãn ngày kỷ niệm cố định 18/04/2026 -->
       <div class="inline-flex items-center space-x-1.5 px-3.5 py-1 rounded-full bg-rose-100/70 border border-rose-200 text-rose-700 text-xs font-semibold mb-5 shadow-inner">
         <span>✨ Bắt đầu từ ngày:</span>
         <span class="font-bold text-rose-900">18/04/2026</span>
         <span>✨</span>
       </div>
 
-      <!-- 3 Ô kính Giờ - Phút - Giây (1 hàng ngang mượt mà) -->
+      <!-- 3 Ô Giờ - Phút - Giây (1 hàng ngang mượt mà) -->
       <div class="grid grid-cols-3 gap-2.5 sm:gap-3 max-w-xs sm:max-w-sm mx-auto">
-        <!-- Giờ -->
         <div class="bg-white/90 rounded-2xl p-2.5 sm:p-3 border border-rose-100 shadow-sm">
           <div id="counterHours" class="text-xl sm:text-2xl font-extrabold text-slate-800">00</div>
           <div class="text-[10px] sm:text-xs font-semibold uppercase text-rose-400 mt-0.5">Giờ</div>
         </div>
-        <!-- Phút -->
         <div class="bg-white/90 rounded-2xl p-2.5 sm:p-3 border border-rose-100 shadow-sm">
           <div id="counterMinutes" class="text-xl sm:text-2xl font-extrabold text-slate-800">00</div>
           <div class="text-[10px] sm:text-xs font-semibold uppercase text-rose-400 mt-0.5">Phút</div>
         </div>
-        <!-- Giây -->
         <div class="bg-white/90 rounded-2xl p-2.5 sm:p-3 border border-rose-100 shadow-sm">
           <div id="counterSeconds" class="text-xl sm:text-2xl font-extrabold text-rose-600">00</div>
           <div class="text-[10px] sm:text-xs font-semibold uppercase text-rose-400 mt-0.5">Giây</div>
@@ -264,36 +240,32 @@
       </div>
     </section>
 
-    <!-- 4. PHONG BÌ THƯ TÌNH 3D TƯƠNG TÁC -->
+    <!-- 4. LÁ THƯ TÌNH 3D TƯƠNG TÁC -->
     <section class="w-full glass-card rounded-3xl p-6 shadow-xl shadow-rose-200/50 mb-8 text-center flex flex-col items-center">
       <p class="text-xs tracking-widest font-semibold uppercase text-rose-500 mb-1">Món Quà Trái Tim</p>
       <h2 class="font-handwriting text-2xl sm:text-3xl text-slate-800 font-bold mb-4">Lá Thư Tình Gửi Chi Thu</h2>
 
-      <!-- Mô hình phong bì tương tác 3D -->
+      <!-- Mô hình phong bì 3D -->
       <div id="envelopeContainer" onclick="openEnvelope()" class="envelope-wrapper relative w-64 sm:w-72 h-44 cursor-pointer select-none group mt-2">
-        <!-- Bóng phong bì -->
         <div class="absolute inset-x-4 bottom-0 h-6 bg-rose-900/20 blur-md rounded-full"></div>
-
-        <!-- Thân sau của phong bì -->
         <div class="absolute inset-0 bg-rose-800 rounded-2xl shadow-lg"></div>
 
-        <!-- Lá thư bên trong sẽ nhô lên -->
+        <!-- Lá thư trượt lên -->
         <div class="envelope-letter absolute inset-x-4 top-2 h-36 bg-amber-50 rounded-xl shadow border border-amber-200 p-3 flex flex-col items-center justify-center text-center">
           <span class="text-rose-500 text-lg">❤️</span>
           <span class="font-handwriting text-slate-700 font-bold text-sm sm:text-base">Gửi người anh yêu nhất...</span>
-          <span class="text-[10px] text-amber-700/70 mt-1">Chạm để đọc hết bức thư</span>
+          <span class="text-[10px] text-amber-700/70 mt-1">Chạm để mở đọc thư</span>
         </div>
 
-        <!-- Thân trước (2 vạt bên & đáy phong bì) -->
+        <!-- Thân trước phong bì -->
         <div class="absolute inset-0 z-10 pointer-events-none">
-          <!-- Vạt đáy hình tam giác -->
           <div class="absolute inset-0 bg-gradient-to-t from-rose-700 to-rose-600 rounded-2xl [clip-path:polygon(0_35%,_50%_75%,_100%_35%,_100%_100%,_0%_100%)] shadow-inner"></div>
         </div>
 
-        <!-- Nắp phong bì (Lật mở 180 độ) -->
+        <!-- Nắp phong bì mở 180 độ -->
         <div class="envelope-flap absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-rose-600 to-rose-700 rounded-t-2xl z-20 [clip-path:polygon(0_0,_100%_0,_50%_100%)] shadow-md"></div>
 
-        <!-- Con dấu sáp vàng ánh kim dập nổi trái tim -->
+        <!-- Con dấu sáp vàng ánh kim -->
         <div id="waxSeal" class="absolute left-1/2 top-[48%] -translate-x-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-gradient-to-tr from-amber-600 via-gold-400 to-amber-200 shadow-md flex items-center justify-center border border-amber-300 transition-transform group-hover:scale-110">
           <svg class="w-6 h-6 text-amber-900 fill-current" viewBox="0 0 24 24">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -304,22 +276,18 @@
       <p class="text-xs text-rose-500 font-medium mt-4">Chạm vào con dấu sáp để mở phong bì</p>
     </section>
 
-    <!-- Footer tình cảm -->
     <footer class="text-center text-xs text-rose-400/80 mb-6">
       Mỗi giây phút bên em đều là một món quà vô giá • Chí Tân & Chi Thu
     </footer>
   </main>
 
-  <!-- ==================== MODAL 1: ĐỌC BỨC THƯ TÌNH ==================== -->
+  <!-- ==================== MODAL XEM THƯ TÌNH ==================== -->
   <div id="letterModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="w-full max-w-md bg-[#fdfbf7] rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-amber-200 relative max-h-[90vh] flex flex-col">
-      
-      <!-- Nút đóng -->
       <button onclick="closeLetterModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-rose-100 text-rose-600 font-bold flex items-center justify-center active:scale-95">
         ✕
       </button>
 
-      <!-- Nội dung thư dạng giấy da cổ điển -->
       <div class="overflow-y-auto pr-1">
         <div class="text-center mb-4 border-b border-amber-200 pb-3">
           <span class="text-2xl">💌</span>
@@ -342,7 +310,6 @@
         </div>
       </div>
 
-      <!-- Nút chỉnh sửa thư -->
       <div class="mt-5 pt-3 border-t border-amber-200/80 flex items-center justify-between">
         <button onclick="openEditLetterModal()" class="text-xs text-rose-600 hover:text-rose-700 font-semibold flex items-center space-x-1">
           <span>✏️ Chỉnh sửa lời thư</span>
@@ -354,11 +321,11 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 2: CHỈNH SỬA NỘI DUNG THƯ ==================== -->
+  <!-- ==================== MODAL SỬA NỘI DUNG THƯ ==================== -->
   <div id="editLetterModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-rose-100">
       <h3 class="font-bold text-lg text-slate-800 mb-1">Chỉnh Sửa Thư Tình</h3>
-      <p class="text-xs text-slate-500 mb-4">Nội dung sẽ được lưu lại vĩnh viễn trên máy của bạn.</p>
+      <p class="text-xs text-slate-500 mb-4">Nội dung thư sẽ được lưu lại bền vững trên máy của bạn.</p>
 
       <div class="space-y-3">
         <div>
@@ -382,49 +349,16 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 3: ĐỔI ẢNH AVATAR ==================== -->
-  <div id="avatarModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="w-full max-w-sm bg-white rounded-3xl p-6 shadow-2xl border border-rose-100">
-      <h3 id="avatarModalTitle" class="font-bold text-base text-slate-800 mb-1">Cập Nhật Ảnh Đại Diện</h3>
-      <p class="text-xs text-slate-500 mb-4">Tải ảnh từ điện thoại/máy tính hoặc dán đường link ảnh.</p>
-
-      <!-- Cách 1: Tải từ máy tính/điện thoại -->
-      <label class="block mb-3">
-        <span class="text-xs font-semibold text-slate-700 mb-1 block">1. Tải ảnh từ thiết bị:</span>
-        <input type="file" id="avatarFileInput" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-600 hover:file:bg-rose-100 cursor-pointer" />
-      </label>
-
-      <!-- Cách 2: Dán link URL -->
-      <div class="mb-4">
-        <span class="text-xs font-semibold text-slate-700 mb-1 block">2. Hoặc dán link ảnh trực tuyến:</span>
-        <input type="url" id="avatarUrlInput" placeholder="https://domain.com/anh.jpg" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-400" />
-      </div>
-
-      <div class="flex space-x-2">
-        <button onclick="closeAvatarModal()" class="flex-1 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold active:scale-95">
-          Đóng
-        </button>
-        <button onclick="saveAvatarFromInput()" class="flex-1 py-2 rounded-xl bg-rose-600 text-white text-xs font-semibold shadow active:scale-95">
-          Lưu Ảnh
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- JAVASCRIPT ĐIỀU KHIỂN HOẠT ĐỘNG -->
+  <!-- JAVASCRIPT ĐIỀU KHIỂN -->
   <script>
-    // 1. CỐ ĐỊNH NGÀY BẮT ĐẦU YÊU: 18/04/2026 (00:00:00)
-    const START_DATE = new Date(2026, 3, 18, 0, 0, 0); // Tháng 3 trong JS tương ứng tháng 4
+    // 1. CỐ ĐỊNH NGÀY BẮT ĐẦU: 18/04/2026 (00:00:00)
+    const START_DATE = new Date(2026, 3, 18, 0, 0, 0);
 
-    // 2. TÍNH TOÁN BỘ ĐẾM THỜI GIAN THỜI GIAN THỰC
+    // 2. BỘ ĐẾM THỜI GIAN THỜI GIAN THỰC
     function updateCounter() {
       const now = new Date();
       let diffMs = now.getTime() - START_DATE.getTime();
-
-      // Nếu chưa tới ngày bắt đầu, hiển thị 0 thay vì số âm
-      if (diffMs < 0) {
-        diffMs = 0;
-      }
+      if (diffMs < 0) diffMs = 0;
 
       const totalSeconds = Math.floor(diffMs / 1000);
       const days = Math.floor(totalSeconds / (3600 * 24));
@@ -437,12 +371,10 @@
       document.getElementById('counterMinutes').innerText = String(minutes).padStart(2, '0');
       document.getElementById('counterSeconds').innerText = String(seconds).padStart(2, '0');
     }
-
-    // Cập nhật mỗi giây
     setInterval(updateCounter, 1000);
     updateCounter();
 
-    // 3. CANVAS TRÁI TIM BAY & BUNG TIM KHI CHẠM
+    // 3. CANVAS HẠT TIM BAY & BUNG TIM KHI CHẠM
     const canvas = document.getElementById('heartCanvas');
     const ctx = canvas.getContext('2d');
     let width = canvas.width = window.innerWidth;
@@ -456,8 +388,7 @@
     const floatingHearts = [];
     const burstParticles = [];
 
-    // Tạo các hạt tim bay lơ lửng ngẫu nhiên
-    for (let i = 0; i < 24; i++) {
+    for (let i = 0; i < 22; i++) {
       floatingHearts.push({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -503,17 +434,13 @@
       }
     }
 
-    // Chạm vào bất kỳ vị trí nào trên màn hình đều bung chùm tim
     window.addEventListener('pointerdown', (e) => {
-      // Bỏ qua nếu chạm vào các ô nhập liệu
       if (['INPUT', 'TEXTAREA', 'BUTTON'].includes(e.target.tagName)) return;
       createBurst(e.clientX, e.clientY);
     });
 
     function animateParticles() {
       ctx.clearRect(0, 0, width, height);
-
-      // Vẽ tim bay lơ lửng
       floatingHearts.forEach(h => {
         h.y -= h.speedY;
         h.x += h.speedX;
@@ -524,12 +451,11 @@
         drawHeart(h.x, h.y, h.size, h.color, h.opacity);
       });
 
-      // Vẽ chùm tim bung nổ
       for (let i = burstParticles.length - 1; i >= 0; i--) {
         const p = burstParticles[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.05; // trọng lực nhẹ
+        p.vy += 0.05;
         p.life -= p.decay;
         if (p.life <= 0) {
           burstParticles.splice(i, 1);
@@ -537,12 +463,11 @@
           drawHeart(p.x, p.y, p.size * p.life, p.color, p.life);
         }
       }
-
       requestAnimationFrame(animateParticles);
     }
     animateParticles();
 
-    // 4. LỜI THÌ THẦM KHI BẤM VÀO TRÁI TIM Ở GIỮA
+    // 4. BẤM TRÁI TIM Ở GIỮA BUNG LỜI THÌ THẦM
     const sweetWhispers = [
       '💌 "Mỗi ngày bên Chi Thu đều là ngày ngọt ngào nhất của Chí Tân!"',
       '✨ "Chi Thu là điều may mắn và tuyệt vời nhất trong cuộc đời Tân!"',
@@ -562,12 +487,11 @@
       bubble.classList.remove('hidden');
     }
 
-    // 5. TƯƠNG TÁC PHONG BÌ 3D & THƯ TÌNH
+    // 5. PHONG BÌ 3D & THƯ TÌNH
     const envelopeContainer = document.getElementById('envelopeContainer');
     const letterModal = document.getElementById('letterModal');
     const editLetterModal = document.getElementById('editLetterModal');
 
-    // Nạp thư từ localStorage
     const savedLetterTitle = localStorage.getItem('love_letter_title') || 'Gửi Chi Thu - Tình Yêu Của Anh';
     const savedLetterContent = localStorage.getItem('love_letter_content') || 
 `Gửi Chi Thu thương yêu,
@@ -621,56 +545,7 @@ Dù là 100 ngày, 1.000 ngày hay cả một đời phía trước, bàn tay n�
       closeEditLetterModal();
     }
 
-    // 6. QUẢN LÝ ẢNH ĐẠI DIỆN AVATAR
-    let currentAvatarTarget = 'tan';
-    const avatarTan = document.getElementById('avatarTan');
-    const avatarThu = document.getElementById('avatarThu');
-
-    // Nạp ảnh đã lưu
-    if (localStorage.getItem('avatar_tan')) avatarTan.src = localStorage.getItem('avatar_tan');
-    if (localStorage.getItem('avatar_thu')) avatarThu.src = localStorage.getItem('avatar_thu');
-
-    function openAvatarModal(who) {
-      currentAvatarTarget = who;
-      document.getElementById('avatarModalTitle').innerText = who === 'tan' ? 'Đổi Ảnh Đại Diện Chí Tân' : 'Đổi Ảnh Đại Diện Chi Thu';
-      document.getElementById('avatarFileInput').value = '';
-      document.getElementById('avatarUrlInput').value = '';
-      document.getElementById('avatarModal').classList.remove('hidden');
-    }
-
-    function closeAvatarModal() {
-      document.getElementById('avatarModal').classList.add('hidden');
-    }
-
-    function saveAvatarFromInput() {
-      const fileInput = document.getElementById('avatarFileInput');
-      const urlInput = document.getElementById('avatarUrlInput').value.trim();
-
-      if (fileInput.files && fileInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          applyAvatar(currentAvatarTarget, e.target.result);
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-      } else if (urlInput) {
-        applyAvatar(currentAvatarTarget, urlInput);
-      } else {
-        closeAvatarModal();
-      }
-    }
-
-    function applyAvatar(who, src) {
-      if (who === 'tan') {
-        avatarTan.src = src;
-        localStorage.setItem('avatar_tan', src);
-      } else {
-        avatarThu.src = src;
-        localStorage.setItem('avatar_thu', src);
-      }
-      closeAvatarModal();
-    }
-
-    // 7. NHẠC NỀN DU DƯƠNG (Web Audio API Synthesizer - Không sợ lỗi link)
+    // 6. NHẠC NỀN SYNTHESIZER
     let audioCtx = null;
     let isPlaying = false;
     let musicInterval = null;
@@ -709,7 +584,6 @@ Dù là 100 ngày, 1.000 ngày hay cả một đời phía trước, bàn tay n�
     }
 
     function playRomanticNotes() {
-      // Hợp âm piano nhẹ nhàng (C, G, Am, F)
       const chord = [261.63, 329.63, 392.00, 523.25];
       chord.forEach((freq, idx) => {
         playNote(freq, idx * 0.45, 1.8);
