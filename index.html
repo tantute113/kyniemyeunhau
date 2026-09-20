@@ -48,7 +48,7 @@
   </script>
 
   <style>
-    /* Chống tràn viền ngang trên mọi màn hình di động */
+    /* Chống tràn viền ngang */
     html, body {
       overflow-x: hidden;
       width: 100%;
@@ -124,6 +124,9 @@
 
 <body class="bg-gradient-to-b from-rose-50 via-pink-50 to-red-50 text-slate-800 min-h-screen font-sans selection:bg-rose-200">
 
+  <!-- Thẻ phát bài hát nhac.mp3 -->
+  <audio id="loveAudio" src="nhac.mp3" loop preload="auto" playsinline></audio>
+
   <!-- Canvas hạt tim bay & bung tim khi chạm màn hình -->
   <canvas id="heartCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
@@ -139,7 +142,7 @@
         <span class="text-xs font-semibold tracking-wider text-rose-500 uppercase">Kỷ Niệm Tình Yêu</span>
       </div>
 
-      <!-- Nút phát nhạc nền -->
+      <!-- Nút Bật/Tắt nhạc nhac.mp3 -->
       <button id="musicToggleBtn" onclick="toggleMusic()" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-rose-200 shadow-sm text-xs text-rose-600 active:scale-95 transition-all">
         <span id="musicIcon" class="text-sm">🎵</span>
         <span id="musicStatusText">Nhạc: Tắt</span>
@@ -148,7 +151,6 @@
 
     <!-- 2. KHU VỰC CẶP ĐÔI & TRÁI TIM 3D -->
     <section class="w-full glass-card rounded-3xl p-5 sm:p-7 shadow-xl shadow-rose-200/50 mb-6">
-      <!-- Tiêu đề Chí Tân & Chi Thu -->
       <div class="text-center mb-6">
         <h1 class="font-script text-4xl sm:text-5xl text-rose-600 font-bold tracking-wide drop-shadow-sm">
           Chí Tân <span class="text-amber-500 font-serif text-3xl sm:text-4xl">&</span> Chi Thu
@@ -156,22 +158,20 @@
         <p class="text-xs text-rose-400 font-medium tracking-widest uppercase mt-1">Our Beautiful Love Story</p>
       </div>
 
-      <!-- Avatar 2 bên & Trái tim ở giữa -->
       <div class="flex items-center justify-between gap-2 max-w-md mx-auto">
-        
-        <!-- Avatar Chí Tân (Cố định ảnh thật, viền hào quang quay) -->
+        <!-- Avatar Chí Tân -->
         <div class="flex flex-col items-center flex-1">
           <div class="relative select-none">
             <div class="absolute -inset-1 rounded-full aura-glow opacity-80 blur-[2px]"></div>
             <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-white shadow-md bg-rose-100">
-              <img id="avatarTan" referrerpolicy="no-referrer" src="https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-1/461212682_1926979774380056_37020811083100250_n.jpg?stp=dst-jpg_tt6&cstp=mx960x952&ctp=p100x100&_nc_cat=106&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=e99d92&_nc_ohc=7pWlcgzudIAQ7kNvwHBdy06&_nc_oc=Adqi8Kr5riPW1lkugznBcPooTlSA97lWsytmKHyZ-Ozr4eb7lW-vFuKO-zf_To2Wk0c&_nc_zt=24&_nc_ht=scontent.fsgn5-15.fna&_nc_gid=f3echnTguJh-MUvV35utsw&_nc_ss=7b289&oh=00_AQKRHzCVvpujdhSf4rV4I1NzaLAJbuYj6-UHep-PkZ47nA&oe=6AB5B92C" alt="Chí Tân" class="w-full h-full object-cover" />
+              <img id="avatarTan" referrerpolicy="no-referrer" src="https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-1/461212682_1926979774380056_37020811083100250_n.jpg" alt="Chí Tân" class="w-full h-full object-cover" />
             </div>
           </div>
           <span class="mt-2.5 font-bold text-sm sm:text-base text-slate-800">Chí Tân</span>
           <span class="text-[10px] sm:text-xs text-rose-500 font-medium">Chàng trai của em</span>
         </div>
 
-        <!-- Trái tim 3D ở giữa (Nhịp đập tim kép) -->
+        <!-- Trái tim 3D -->
         <div class="flex flex-col items-center justify-center relative px-2">
           <div class="absolute w-14 h-14 rounded-full bg-rose-400/20 ripple-ring-1 pointer-events-none"></div>
           <div class="absolute w-14 h-14 rounded-full bg-pink-400/20 ripple-ring-2 pointer-events-none"></div>
@@ -184,21 +184,19 @@
           <span class="text-[10px] text-rose-400 font-semibold tracking-wider mt-2">Chạm tim</span>
         </div>
 
-        <!-- Avatar Chi Thu (Cố định ảnh thật, viền hào quang quay) -->
+        <!-- Avatar Chi Thu -->
         <div class="flex flex-col items-center flex-1">
           <div class="relative select-none">
             <div class="absolute -inset-1 rounded-full aura-glow opacity-80 blur-[2px]"></div>
             <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-white shadow-md bg-rose-100">
-              <img id="avatarThu" referrerpolicy="no-referrer" src="https://scontent.fsgn5-22.fna.fbcdn.net/v/t39.30808-1/615369557_1396059388557899_5526468148412702061_n.jpg?stp=dst-jpg_tt6&cstp=mx960x958&ctp=s200x200&_nc_cat=108&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=1d2534&_nc_ohc=GYwp0-84EFoQ7kNvwH8ySo_&_nc_oc=AdrVZeHzlFNwfZ1xQheRHocmZnXPke4_monTA6dd-Fn5oT2Iz6JlmlV_fJiv83frhOI&_nc_zt=24&_nc_ht=scontent.fsgn5-22.fna&_nc_gid=6ZxyeIJE49mMgLbgN4eldA&_nc_ss=7b289&oh=00_AQKRhjXTtqaFnQIA3bKJ-Yv7643rDicERQs3Uc2xs1tesw&oe=6AB5C700" alt="Chi Thu" class="w-full h-full object-cover" />
+              <img id="avatarThu" referrerpolicy="no-referrer" src="https://scontent.fsgn5-22.fna.fbcdn.net/v/t39.30808-1/615369557_1396059388557899_5526468148412702061_n.jpg" alt="Chi Thu" class="w-full h-full object-cover" />
             </div>
           </div>
           <span class="mt-2.5 font-bold text-sm sm:text-base text-slate-800">Chi Thu</span>
           <span class="text-[10px] sm:text-xs text-rose-500 font-medium">Cô gái của anh</span>
         </div>
-
       </div>
 
-      <!-- Bong bóng lời thì thầm ngọt ngào khi chạm tim -->
       <div id="whisperBubble" class="hidden mt-4 mx-auto max-w-sm text-center p-2.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium animate-bounce shadow-sm">
         💌 "Mỗi ngày bên Chi Thu đều là ngày ngọt ngào nhất của Chí Tân!"
       </div>
@@ -216,14 +214,13 @@
         <span class="text-xl sm:text-2xl font-bold text-rose-500 ml-1">NGÀY</span>
       </div>
 
-      <!-- Nhãn ngày kỷ niệm cố định 18/04/2026 -->
       <div class="inline-flex items-center space-x-1.5 px-3.5 py-1 rounded-full bg-rose-100/70 border border-rose-200 text-rose-700 text-xs font-semibold mb-5 shadow-inner">
         <span>✨ Bắt đầu từ ngày:</span>
         <span class="font-bold text-rose-900">18/04/2026</span>
         <span>✨</span>
       </div>
 
-      <!-- 3 Ô Giờ - Phút - Giây (1 hàng ngang mượt mà) -->
+      <!-- 3 Ô Giờ - Phút - Giây -->
       <div class="grid grid-cols-3 gap-2.5 sm:gap-3 max-w-xs sm:max-w-sm mx-auto">
         <div class="bg-white/90 rounded-2xl p-2.5 sm:p-3 border border-rose-100 shadow-sm">
           <div id="counterHours" class="text-xl sm:text-2xl font-extrabold text-slate-800">00</div>
@@ -245,27 +242,22 @@
       <p class="text-xs tracking-widest font-semibold uppercase text-rose-500 mb-1">Món Quà Trái Tim</p>
       <h2 class="font-handwriting text-2xl sm:text-3xl text-slate-800 font-bold mb-4">Lá Thư Tình Gửi Chi Thu</h2>
 
-      <!-- Mô hình phong bì 3D -->
       <div id="envelopeContainer" onclick="openEnvelope()" class="envelope-wrapper relative w-64 sm:w-72 h-44 cursor-pointer select-none group mt-2">
         <div class="absolute inset-x-4 bottom-0 h-6 bg-rose-900/20 blur-md rounded-full"></div>
         <div class="absolute inset-0 bg-rose-800 rounded-2xl shadow-lg"></div>
 
-        <!-- Lá thư trượt lên -->
         <div class="envelope-letter absolute inset-x-4 top-2 h-36 bg-amber-50 rounded-xl shadow border border-amber-200 p-3 flex flex-col items-center justify-center text-center">
           <span class="text-rose-500 text-lg">❤️</span>
           <span class="font-handwriting text-slate-700 font-bold text-sm sm:text-base">Gửi người anh yêu nhất...</span>
           <span class="text-[10px] text-amber-700/70 mt-1">Chạm để mở đọc thư</span>
         </div>
 
-        <!-- Thân trước phong bì -->
         <div class="absolute inset-0 z-10 pointer-events-none">
           <div class="absolute inset-0 bg-gradient-to-t from-rose-700 to-rose-600 rounded-2xl [clip-path:polygon(0_35%,_50%_75%,_100%_35%,_100%_100%,_0%_100%)] shadow-inner"></div>
         </div>
 
-        <!-- Nắp phong bì mở 180 độ -->
         <div class="envelope-flap absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-rose-600 to-rose-700 rounded-t-2xl z-20 [clip-path:polygon(0_0,_100%_0,_50%_100%)] shadow-md"></div>
 
-        <!-- Con dấu sáp vàng ánh kim -->
         <div id="waxSeal" class="absolute left-1/2 top-[48%] -translate-x-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-gradient-to-tr from-amber-600 via-gold-400 to-amber-200 shadow-md flex items-center justify-center border border-amber-300 transition-transform group-hover:scale-110">
           <svg class="w-6 h-6 text-amber-900 fill-current" viewBox="0 0 24 24">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -467,7 +459,7 @@
     }
     animateParticles();
 
-    // 4. BẤM TRÁI TIM Ở GIỮA BUNG LỜI THÌ THẦM
+    // 4. BẤM TRÁI TIM Ở GIỮA
     const sweetWhispers = [
       '💌 "Mỗi ngày bên Chi Thu đều là ngày ngọt ngào nhất của Chí Tân!"',
       '✨ "Chi Thu là điều may mắn và tuyệt vời nhất trong cuộc đời Tân!"',
@@ -545,50 +537,59 @@ Dù là 100 ngày, 1.000 ngày hay cả một đời phía trước, bàn tay n�
       closeEditLetterModal();
     }
 
-    // 6. NHẠC NỀN SYNTHESIZER
-    let audioCtx = null;
+    // 6. ĐIỀU KHIỂN DUY NHẤT BÀI HÁT NHAC.MP3 & TỰ ĐỘNG BẬT
+    const loveAudio = document.getElementById('loveAudio');
+    const musicIcon = document.getElementById('musicIcon');
+    const musicStatusText = document.getElementById('musicStatusText');
     let isPlaying = false;
-    let musicInterval = null;
 
-    function toggleMusic() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (isPlaying) {
-        clearInterval(musicInterval);
-        isPlaying = false;
-        document.getElementById('musicIcon').innerText = '🎵';
-        document.getElementById('musicStatusText').innerText = 'Nhạc: Tắt';
+    function setMusicState(playing) {
+      isPlaying = playing;
+      if (playing) {
+        musicIcon.innerText = '🎶';
+        musicStatusText.innerText = 'Nhạc: Bật';
       } else {
-        isPlaying = true;
-        document.getElementById('musicIcon').innerText = '🎶';
-        document.getElementById('musicStatusText').innerText = 'Nhạc: Bật';
-        playRomanticNotes();
-        musicInterval = setInterval(playRomanticNotes, 4200);
+        musicIcon.innerText = '🎵';
+        musicStatusText.innerText = 'Nhạc: Tắt';
       }
     }
 
-    function playNote(freq, start, duration) {
-      if (!audioCtx) return;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime + start);
-      gain.gain.setValueAtTime(0.001, audioCtx.currentTime + start);
-      gain.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + start + 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + start + duration);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start(audioCtx.currentTime + start);
-      osc.stop(audioCtx.currentTime + start + duration);
-    }
-
-    function playRomanticNotes() {
-      const chord = [261.63, 329.63, 392.00, 523.25];
-      chord.forEach((freq, idx) => {
-        playNote(freq, idx * 0.45, 1.8);
+    function playAudioSong() {
+      loveAudio.play().then(() => {
+        setMusicState(true);
+      }).catch((err) => {
+        console.log("Trình duyệt chờ tương tác đầu tiên để bật nhạc:", err);
       });
     }
+
+    function toggleMusic() {
+      if (isPlaying) {
+        loveAudio.pause();
+        setMusicState(false);
+      } else {
+        playAudioSong();
+      }
+    }
+
+    // Cố gắng tự động phát ngay khi vừa load web xong
+    window.addEventListener('DOMContentLoaded', () => {
+      playAudioSong();
+    });
+
+    // VƯỢT CHẶN AUTOPLAY CỦA TRÌNH DUYỆT:
+    // Ngay khi người dùng chạm hoặc click lần đầu tiên vào bất cứ đâu trên màn hình, nhạc sẽ lập tức phát!
+    const triggerAudioOnInteraction = () => {
+      if (!isPlaying) {
+        playAudioSong();
+      }
+      ['touchstart', 'pointerdown', 'click', 'scroll'].forEach(evt => {
+        window.removeEventListener(evt, triggerAudioOnInteraction);
+      });
+    };
+
+    ['touchstart', 'pointerdown', 'click', 'scroll'].forEach(evt => {
+      window.addEventListener(evt, triggerAudioOnInteraction, { once: true });
+    });
   </script>
 </body>
 </html>
